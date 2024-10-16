@@ -53,10 +53,16 @@ public class Jave_Code extends LinearOpMode{
 				_00_motor.setPower(gamepad1.right_stick_y);
 				_01_motor.setPower(gamepad1.left_stick_y);
 
-
 				//Arm control for gamepad2(Kelie)
 				_0_shoulder.setPower(gamepad2.left_stick_y)
 				_1_shoulder.setPower(gamepad2.left_stick_y)
+				if (gamepad2.d_pad_left == true){
+					_00_motor.setPower(0.25)
+					_01_motor.setPower(-0.25)
+					wait(100)
+					_00_motor.setPower(0)
+					_01_motor.setPower(0)
+				}
 				if (gamepad2.a == true) {
 					claew.setPower(-0.25);
 					telemetry.addData("Claw", "Open");

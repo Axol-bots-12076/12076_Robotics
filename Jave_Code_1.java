@@ -77,12 +77,12 @@ public class Jave_Code extends LinearOpMode{
 				//Arm control for gamepad2(Kelie)
 				shoulder_0.setPower(gamepad2.left_stick_y);
 				shoulder_1.setPower(-(gamepad2.left_stick_y));
-				Arm.setPower(gamepad2.right_stick_y)
+				Arm.setPower(gamepad2.right_stick_y);
 				if (gamepad2.dpad_up) {
-					Spinnery_tingey.setPower(1)
+					Spinnery_tingey.setPower(1);
 				}
 				if (gamepad2.dpad_down) {
-					Spinnery_tingey.setPower(-1)
+					Spinnery_tingey.setPower(-1);
 				}
 				if (gamepad2.b == true) {
 					shoulder_0.setPower(-0.25);

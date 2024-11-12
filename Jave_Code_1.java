@@ -17,7 +17,9 @@ public class Jave_Code extends LinearOpMode{
 	private DcMotor _01_motor;
 	private DcMotor shoulder_0;
 	private DcMotor shoulder_1;
+	private DcMotor Arm;
 	private CRServo claew;
+	private CRServo Spinnery_tingey;
 	float LeftPower = 0;
 	float RightPower = 0;
 	String micro = "";
@@ -35,8 +37,9 @@ public class Jave_Code extends LinearOpMode{
 		 _01_motor = hardwareMap.get(DcMotor.class, "01_motor");
 		 shoulder_0 = hardwareMap.get(DcMotor.class, "shoulder_0");
 		 shoulder_1 = hardwareMap.get(DcMotor.class, "shoulder_1");
+		 Arm = hardwareMap.get(DcMotor.class, "Arm");
 		 claew = hardwareMap.get(CRServo.class, "claew");
-
+		 Spinnery_tingey = hardwareMap.get(CRServo.class, "Spinnery_tingey");
 		//April Tags(ERRORS, FIX)
 		//telemetryAprilTag();
 
@@ -74,11 +77,17 @@ public class Jave_Code extends LinearOpMode{
 				//Arm control for gamepad2(Kelie)
 				shoulder_0.setPower(gamepad2.left_stick_y);
 				shoulder_1.setPower(-(gamepad2.left_stick_y));
+				Arm.setPower(gamepad2.right_stick_y)
+				if (gamepad2.dpad_up) {
+					Spinnery_tingey.setPower(1)
+				}
+				if (gamepad2.dpad_down) {
+					Spinnery_tingey.setPower(-1)
+				}
 				if (gamepad2.b == true) {
 					shoulder_0.setPower(-0.25);
 					shoulder_1.setPower(0.25);
 				}
-
 
 				if (gamepad2.a == true) {
 					claew.setPower(-0.15);
@@ -88,6 +97,8 @@ public class Jave_Code extends LinearOpMode{
 					claew.setPower(0);
 					telemetry.addData("Claw", "Closed");
 				}
+
+
 
 				//Telementry calls
 				telemetry.addData("Left Motor", LeftPower); //The speed the robot is trying to move on the Left Motor

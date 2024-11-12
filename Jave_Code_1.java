@@ -31,6 +31,8 @@ public class Jave_Code extends LinearOpMode{
 		//Map our hardware on the robot to the variables previously created
 		 _00_motor = hardwareMap.get(DcMotor.class, "00_motor");
 		 _01_motor = hardwareMap.get(DcMotor.class, "01_motor");
+		 _0_shoulder = hardwareMap.get(DcMotor.class, "0_shoulder");
+		 _1_shoulder = hardwareMap.get(DcMotor.class, "1_shoulder");
 		 claew = hardwareMap.get(CRServo.class, "claew");
 
 		//April Tags(ERRORS, FIX)
@@ -47,8 +49,20 @@ public class Jave_Code extends LinearOpMode{
 				float LeftPower = gamepad1.left_stick_y;
 				float RightPower = gamepad1.right_stick_y;
 
+				//Movement for gamepad1(Trenton)
 				_00_motor.setPower(gamepad1.right_stick_y);
 				_01_motor.setPower(gamepad1.left_stick_y);
+
+				//Arm control for gamepad2(Kelie)
+				_0_shoulder.setPower(gamepad2.left_stick_y)
+				_1_shoulder.setPower(gamepad2.left_stick_y)
+				if (gamepad2.d_pad_left == true){
+					_00_motor.setPower(0.25)
+					_01_motor.setPower(-0.25)
+					wait(100)
+					_00_motor.setPower(0)
+					_01_motor.setPower(0)
+				}
 				if (gamepad2.a == true) {
 					claew.setPower(-0.25);
 					telemetry.addData("Claw", "Open");

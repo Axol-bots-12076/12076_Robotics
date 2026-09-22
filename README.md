@@ -6,6 +6,6 @@ This is the branch for 2026/27 year, as set up by Rain, the Team lead of 12076 A
 The main branch shall hold the code for the current Robotics year "BIOBUZZ 2026/2027", and will be updated to what is currently running on the robot. Any code may be used under the GNU GPL v3 License.
 
 ## Contributors:
-Joshua Zietlow(Robotics Teacher)
-Rain(Team & Code Lead)
-kayjayo(Coder)
+<p>Joshua Zietlow(Robotics Teacher)</p>
+<p>Rain(Team & Code Lead)</p>
+<p>Kayjayo(Coder)</p>

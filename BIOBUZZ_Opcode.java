@@ -16,6 +16,10 @@ import java.util.List;
 
 public class Code_2627 extends LinearOpMode{
 
+	private DcMotor Front_Left; 
+	private DcMotor Front_Right; 
+	private DcMotor Back_Left; 
+	private DcMotor Back_Right; 
 
 	private static final boolean USE_WEBCAM = true;
 	private AprilTagProcessor aprilTag;
@@ -23,6 +27,11 @@ public class Code_2627 extends LinearOpMode{
 
 	@Override
 	public void runOpMode() {
+
+		Front_Left = hardwareMap.get(DcMotor.class, "Front_Left")
+		Front_Right = hardwareMap.get(DcMotor.class, "Front_Right")
+		Back_Left = hardwareMap.get(DcMotor.class, "Back_Left")
+		Back_Right = hardwareMap.get(DcMotor.class, "Back_Right")
 
 		initAprilTag();
 
@@ -49,6 +58,10 @@ public class Code_2627 extends LinearOpMode{
 
 				// Share the CPU.
 				sleep(20);
+
+
+				Front_Left.setPower(sin(gamepad1.left_stick_y));
+
 			}
 		}
 

@@ -11,6 +11,7 @@ import org.firstinspires.ftc.vision.VisionPortal;
 import org.firstinspires.ftc.vision.apriltag.AprilTagDetection;
 import org.firstinspires.ftc.vision.apriltag.AprilTagProcessor;
 import java.util.List;
+import java.lang.Math;
 
 @TeleOp(name="Robotics Code 2026-27")
 
@@ -60,8 +61,8 @@ public class Code_2627 extends LinearOpMode{
 				sleep(20);
 
 
-				Front_Left.setPower(sin(gamepad1.left_stick_y));
-
+				Front_Left.setPower(Main.sin(gamepad1.left_stick_y));
+				telemetry.addData("sine", Math.sin(gamepad1.left_stick_y));
 			}
 		}
 

@@ -17,11 +17,13 @@ import java.lang.Math;
 
 public class Code_2627 extends LinearOpMode{
 
+	//Motors should be written in this order, it is the same as 0-3 on the control hubs motor ports -R
 	private DcMotor Front_Left; 
 	private DcMotor Front_Right; 
 	private DcMotor Back_Left; 
 	private DcMotor Back_Right; 
 
+	//AprilTag stuff, look at initAprilTag for the rest(Taken from FTC code) -R
 	private static final boolean USE_WEBCAM = true;
 	private AprilTagProcessor aprilTag;
 	private VisionPortal visionPortal;
@@ -60,8 +62,11 @@ public class Code_2627 extends LinearOpMode{
 				// Share the CPU.
 				sleep(20);
 
+				//Wheel Control, for now this is going to be based on the left stick being your directional movement, with the rightstick controlling roation.
+				Front_Left.setPower(Math.sin(gamepad1.left_stick_y*3.14));
+				Front_Right.setPower(Math.sin(gamepad1.left_stick_y*3.14)+0.25)
 
-				Front_Left.setPower(Main.sin(gamepad1.left_stick_y));
+				//Telemetry to test if I am stupid - Rain
 				telemetry.addData("sine", Math.sin(gamepad1.left_stick_y));
 			}
 		}

@@ -83,9 +83,9 @@ public class Code_2627 extends LinearOpMode{
 			.setDrawAxes(true)
 			//.setDrawCubeProjection(false)
 			//.setDrawTagOutline(true)
-			//.setTagFamily(AprilTagProcessor.TagFamily.TAG_36h11)
+			.setTagFamily(AprilTagProcessor.TagFamily.TAG_36h11)
 			//.setTagLibrary(AprilTagGameDatabase.getCenterStageTagLibrary())
-			//.setOutputUnits(DistanceUnit.INCH, AngleUnit.DEGREES)
+			.setOutputUnits(DistanceUnit.INCH, AngleUnit.DEGREES)
 
 			// == CAMERA CALIBRATION ==
 			// If you do not manually specify calibration parameters, the SDK will attempt
@@ -115,7 +115,7 @@ public class Code_2627 extends LinearOpMode{
 		}
 
 		// Choose a camera resolution. Not all cameras support all resolutions.
-		//builder.setCameraResolution(new Size(640, 480));
+		builder.setCameraResolution(new Size(640, 480)); //it HAS to be 480p for the SDK calibration to be correct on a Logitech C270 camera, if you want a different resolution(ie 720p) you may have to redo calibraion yourself(30ish lines up from here) -Rainh
 
 		// Enable the RC preview (LiveView).  Set "false" to omit camera monitoring.
 		//builder.enableLiveView(true);

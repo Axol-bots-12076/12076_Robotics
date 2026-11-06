@@ -25,7 +25,6 @@ public class Code_2627 extends LinearOpMode{
 	double LSY = 0;
 	double LSX = 0;
 	double RSX = 0;
-	double halfpi = (3.141592653589793238462643383279502884197169399375105820974944592307)/2; //this is probably enough :)
 
 	//AprilTag stuff, look at initAprilTag for the rest(Taken from FTC code) -R
 	private static final boolean USE_WEBCAM = true;
@@ -39,7 +38,8 @@ public class Code_2627 extends LinearOpMode{
 		Front_Right = hardwareMap.get(DcMotor.class, "Front_Right");
 		Back_Left = hardwareMap.get(DcMotor.class, "Back_Left");
 		Back_Right = hardwareMap.get(DcMotor.class, "Back_Right");
-
+		Front_Right.setDirection(DcMotor.Direction.REVERSE);
+		Back_Left.setDirection(DcMotor.Direction.REVERSE);
 		initAprilTag();
 
 		// Wait for the DS start button to be touched.
@@ -77,7 +77,7 @@ public class Code_2627 extends LinearOpMode{
 				Back_Right.setPower((LSY + LSX)/2);//^^
 
 				//Rotational Movement
-				if (RSX > 0.1) {//deadzone on the RSX incase of issues
+				if ((RSX > 0.1) || (RSX < -0.1)) {//deadzone on the RSX incase of issues
 					Front_Left.setPower(RSX);
 					Front_Right.setPower(-(RSX));
 					Back_Left.setPower(RSX);

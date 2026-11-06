@@ -18,10 +18,14 @@ import java.lang.Math;
 public class Code_2627 extends LinearOpMode{
 
 	//Motors should be written in this order, it is the same as 0-3 on the control hubs motor ports -R
-	private DcMotor Front_Left; 
-	private DcMotor Front_Right; 
-	private DcMotor Back_Left; 
-	private DcMotor Back_Right; 
+	private DcMotor Front_Left; //CH00
+	private DcMotor Front_Right; //CH01
+	private DcMotor Back_Left; //EH03
+	private DcMotor Back_Right; //EH02
+	double LSY = 0;
+	double LSX = 0;
+	double RSX = 0;
+	double halfpi = (3.141592653589793238462643383279502884197169399375105820974944592307)/2; //this is probably enough :)
 
 	//AprilTag stuff, look at initAprilTag for the rest(Taken from FTC code) -R
 	private static final boolean USE_WEBCAM = true;
@@ -31,10 +35,10 @@ public class Code_2627 extends LinearOpMode{
 	@Override
 	public void runOpMode() {
 
-		Front_Left = hardwareMap.get(DcMotor.class, "Front_Left")
-		Front_Right = hardwareMap.get(DcMotor.class, "Front_Right")
-		Back_Left = hardwareMap.get(DcMotor.class, "Back_Left")
-		Back_Right = hardwareMap.get(DcMotor.class, "Back_Right")
+		Front_Left = hardwareMap.get(DcMotor.class, "Front_Left");
+		Front_Right = hardwareMap.get(DcMotor.class, "Front_Right");
+		Back_Left = hardwareMap.get(DcMotor.class, "Back_Left");
+		Back_Right = hardwareMap.get(DcMotor.class, "Back_Right");
 
 		initAprilTag();
 
@@ -57,17 +61,31 @@ public class Code_2627 extends LinearOpMode{
 					visionPortal.stopStreaming();
 				} else if (gamepad1.dpad_up) {
 					visionPortal.resumeStreaming();
-				}
+				}	
 
-				// Share the CPU.
-				sleep(20);
+				
 
 				//Wheel Control, for now this is going to be based on the left stick being your directional movement, with the rightstick controlling roation.
-				Front_Left.setPower(Math.sin(gamepad1.left_stick_y*3.14));
-				Front_Right.setPower(Math.sin(gamepad1.left_stick_y*3.14)+0.25)
+				LSY = gamepad1.left_stick_y ;
+				LSX = gamepad1.left_stick_x ;
+				RSX = gamepad1.right_stick_x ;		
+
+				//Linear Movement
+				Front_Left.setPower((LSY + LSX)/2);//same as back right
+				Front_Right.setPower((LSY - LSX)/2);//same as back left
+				Back_Left.setPower((LSY - LSX)/2);//^^
+				Back_Right.setPower((LSY + LSX)/2);//^^
+
+				//Rotational Movement
+				if (RSX > 0.1) {//deadzone on the RSX incase of issues
+					Front_Left.setPower(RSX);
+					Front_Right.setPower(-(RSX));
+					Back_Left.setPower(RSX);
+					Back_Right.setPower(-(RSX));
+				}
 
 				//Telemetry to test if I am stupid - Rain
-				telemetry.addData("sine", Math.sin(gamepad1.left_stick_y));
+				telemetry.addData("sine", Math.sin(Power));
 			}
 		}
 
@@ -88,9 +106,9 @@ public class Code_2627 extends LinearOpMode{
 			.setDrawAxes(true)
 			//.setDrawCubeProjection(false)
 			//.setDrawTagOutline(true)
-			.setTagFamily(AprilTagProcessor.TagFamily.TAG_36h11)
+			//.setTagFamily(AprilTagProcessor.TagFamily.TAG_36h11)
 			//.setTagLibrary(AprilTagGameDatabase.getCenterStageTagLibrary())
-			.setOutputUnits(DistanceUnit.INCH, AngleUnit.DEGREES)
+			//.setOutputUnits(DistanceUnit.INCH, AngleUnit.DEGREES)
 
 			// == CAMERA CALIBRATION ==
 			// If you do not manually specify calibration parameters, the SDK will attempt
@@ -120,7 +138,6 @@ public class Code_2627 extends LinearOpMode{
 		}
 
 		// Choose a camera resolution. Not all cameras support all resolutions.
-		builder.setCameraResolution(new Size(640, 480)); //it HAS to be 480p for the SDK calibration to be correct on a Logitech C270 camera, if you want a different resolution(ie 720p) you may have to redo calibraion yourself(30ish lines up from here) -Rainh
 
 		// Enable the RC preview (LiveView).  Set "false" to omit camera monitoring.
 		//builder.enableLiveView(true);

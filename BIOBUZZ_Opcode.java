@@ -17,11 +17,12 @@ import java.lang.Math;
 
 public class Code_2627 extends LinearOpMode{
 
-	//Motors should be written in this order, it is the same as 0-3 on the control hubs motor ports -R
+	//Motors should be written in this order just to make things easy on yourself later -R
 	private DcMotor Front_Left; //CH00
 	private DcMotor Front_Right; //CH01
 	private DcMotor Back_Left; //EH03
 	private DcMotor Back_Right; //EH02
+
 	double LSY = 0;
 	double LSX = 0;
 	double RSX = 0;
@@ -52,10 +53,7 @@ public class Code_2627 extends LinearOpMode{
 			while (opModeIsActive()) {
  
 				telemetryAprilTag();
-
-				// Push telemetry to the Driver Station.
-				telemetry.update();
-
+				
 				// Save CPU resources; can resume streaming when needed.
 				if (gamepad1.dpad_down) {
 					visionPortal.stopStreaming();
@@ -66,26 +64,29 @@ public class Code_2627 extends LinearOpMode{
 				
 
 				//Wheel Control, for now this is going to be based on the left stick being your directional movement, with the rightstick controlling roation.
-				LSY = gamepad1.left_stick_y ;
-				LSX = gamepad1.left_stick_x ;
-				RSX = gamepad1.right_stick_x ;		
+				LSY = gamepad1.left_stick_y;
+				LSX = gamepad1.left_stick_x;
+				RSX = gamepad1.right_stick_x;		
 
-				//Linear Movement
+				//Linear Movement, currently the motors are out of whack so it does not work
 				Front_Left.setPower((LSY + LSX)/2);//same as back right
 				Front_Right.setPower((LSY - LSX)/2);//same as back left
 				Back_Left.setPower((LSY - LSX)/2);//^^
 				Back_Right.setPower((LSY + LSX)/2);//^^
 
 				//Rotational Movement
-				if ((RSX > 0.1) || (RSX < -0.1)) {//deadzone on the RSX incase of issues
-					Front_Left.setPower(RSX);
-					Front_Right.setPower(-(RSX));
-					Back_Left.setPower(RSX);
-					Back_Right.setPower(-(RSX));
+				if ((RSX > 0.1) || (RSX < -0.1)) {//deadzone on the RSX so it doesnt override the LS movement
+					Front_Left.setPower(-RSX);
+					Front_Right.setPower(RSX);
+					Back_Left.setPower(-RSX);
+					Back_Right.setPower(RSX);
 				}
 
-				//Telemetry to test if I am stupid - Rain
-				telemetry.addData("sine", Math.sin(Power));
+				telemetry.addData("RSX", RSX);
+				telemetry.addData("LSY", LSY);
+				telemetry.addData("LSX", LSX);
+				telemetry.update();
+
 			}
 		}
 

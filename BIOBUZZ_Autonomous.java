@@ -17,7 +17,7 @@ import java.lang.Math;
 
     public class Auto extends LinearOpMode {
 
-        // classify the motors type shi
+        // classify the motors
         private DcMotor Front_Left; 
 	    private DcMotor Front_Right; 
 	    private DcMotor Back_Left; 
@@ -31,7 +31,16 @@ import java.lang.Math;
         double Pollen = (1 / 8); 
         double Nectar = (1 / 5); 
         double HiveBalls = (Nectar * 3); //3 nectar start in the Hive
-        double RoBalls = (Pollen * 4); //we get to start with 4 Pollen, so we should have them :P
+        double RoBallsW = (Pollen * 4); //we get to start with 4 Pollen, so we should have them :P
+        double RoBallsN = 4; //number of gamepieces we have stored
+
+        //robots X and Y location within the field
+        double RBT_X = 0; //when looking from the audience, this will be going left or right, with 0 being in the red garden
+        double RBT_Y = 0; //when looking from the audience, this will be closer or farther, with 0 being in the red garden
+        double RBT_Vel_X = 0; //used for launch balls estimation
+        double RBT_Vel_Y = 0; //same as before
+
+        string Team = "Null"; //Set to Null incase the Robot fails to find team affiliation, if it does then it should immediately go to park.
 
     @Override
     public void runOpMode() {
@@ -67,11 +76,67 @@ import java.lang.Math;
                 check if we have enough to launch, if not go back to collecting
                 */
 
+                //Robot Movement, just reusing Opcode, set variables for movement towards things
+
+				//Linear Movement, currently the motors are out of whack so it does not work
+				Front_Left.setPower((LSY + LSX)/2);//same as back right
+				Front_Right.setPower((LSY - LSX)/2);//same as back left
+				Back_Left.setPower((LSY - LSX)/2);//^^
+				Back_Right.setPower((LSY + LSX)/2);//^^
+
+				//Rotational Movement
+				if ((RSX > 0.1) || (RSX < -0.1)) {//deadzone on the RSX so it doesnt override the LS movement
+					Front_Left.setPower(-RSX);
+					Front_Right.setPower(RSX);
+					Back_Left.setPower(-RSX);
+					Back_Right.setPower(RSX);
+				}
+
+				telemetry.addData("RSX", RSX);
+				telemetry.addData("LSY", LSY);
+				telemetry.addData("LSX", LSX);
+				telemetry.update();
+
+
+
+
                 }
             }
         }
     
+    private void findHives(Team) { //Find our team Hive Cells to aim at. If we cant find our hive then find the enemy hive to know where ours is(and where we are) in reference
+        telemetry.addData("Finding Hive For Team", Team);
+        telemetry.update();
+        //detect that we have a "null" Team(first runt through), so we should search for a team
+        if (Team == "Null") {
+            //magical search for cell cluster
+            //find that we can see 34,35,36,37 cluster on red team, or 42,43,44,45 on blue
+            //set team to that
 
+            telemetry.addData("Team Change", Team);
+            telemetry.update();
+        }
+        if (Team == "Blue") {
+
+        }
+        if (Team == "Red") {
+
+        }
+        return(RBT_X, RBT_Y);
+    }
+
+    private void LaunchBalls(RoBallsN) {
+        telemetry.addData("Launching", RoBallsN);
+        telemetry.update();
+
+        for (RoBallsN > 0) {
+            //launch stuff, idk I dont have the stuff to do it yet :P
+            RoBallsN = RoBallsN - 1;
+        }
+
+
+        return(RoBallsN);
+    }
 
 	/**
 	 * Initialize the AprilTag processor.

@@ -13,9 +13,9 @@ import org.firstinspires.ftc.vision.apriltag.AprilTagProcessor;
 import java.util.List;
 import java.lang.Math;
 
-@Autonomous(name="Auto")
+@Autonomous(name="BIOBUZZ_Auto")
 
-    public class Auto extends LinearOpMode {
+    public class BIOBUZZ_Autonomous extends LinearOpMode {
 
         // classify the motors
         private DcMotor Front_Left; 
@@ -95,7 +95,7 @@ import java.lang.Math;
 	
 	}
 
-    private void findHives(Team) { //Find our team Hive Cells to aim at. If we cant find our hive then find the enemy hive to know where ours is(and where we are) in reference
+    private double findHives() { //Find our team Hive Cells to aim at. If we cant find our hive then find the enemy hive to know where ours is(and where we are) in reference
         telemetry.addData("Finding Hive For Team", Team);
         telemetry.update();
         //detect that we have a "null" Team(first run through), so we should search for a team
@@ -114,11 +114,11 @@ import java.lang.Math;
         if (Team == "Red") {
 
         }
-        return(RBT_X, RBT_Y);
+        return(RBT_X);
     }
 
-    private void LaunchBalls(RoBallsN) {
-        telemetry.addData("Launching", "Posistion Check")
+    private double LaunchBalls() {
+        telemetry.addData("Launching", "Posistion Check");
         telemetry.update();
 		if ("able to shoot" != true) { //check for April Tags being visible in a way that tells us we can shoot at the opening
 			//MoveToLaunch Code
@@ -126,7 +126,7 @@ import java.lang.Math;
         telemetry.addData("Launching", RoBallsN);
         telemetry.update();
 
-        for (RoBallsN > 0) {
+        while (RoBallsN > 0) {
             //launch stuff, idk I dont have the stuff to do it yet :P
             RoBallsN = RoBallsN - 1;
         }
@@ -137,12 +137,12 @@ import java.lang.Math;
 
     private void CollectBalls() {
         //this is the OpenCV garbage I have to write ;-;
-        for (){
+        while (RoBallsN < 4){
             //OpenCV
 
-            if ((RoBallsW + HiveBalls) >= 1) {LaunchBalls(RoBallsN)} //if we have enough weight to launch, launch
+            
         }
-        return(RoBallsN, RoBallsW)
+        
     }
 
 	/**

@@ -15,7 +15,7 @@ import java.lang.Math;
 
 @TeleOp(name="Robotics Code 2026-27")
 
-public class Code_2627 extends LinearOpMode{
+public class BIOBUZZ_Opcode extends LinearOpMode{
 
 	//Motors should be written in this order just to make things easy on yourself later -R
 	private DcMotor Front_Left; //CH00

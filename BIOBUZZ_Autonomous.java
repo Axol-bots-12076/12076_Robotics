@@ -57,6 +57,8 @@ import java.lang.Math;
 
         waitForStart();
 
+		findHives(Team);
+
         if (opModeIsActive()) {
             while (opModeIsActive()) {
 				telemetryAprilTag();
@@ -76,26 +78,7 @@ import java.lang.Math;
                 check if we have enough to launch, if not go back to collecting
                 */
 
-                //Robot Movement, just reusing Opcode, set variables for movement towards things
 
-				//Linear Movement, currently the motors are out of whack so it does not work
-				Front_Left.setPower((LSY + LSX)/2);//same as back right
-				Front_Right.setPower((LSY - LSX)/2);//same as back left
-				Back_Left.setPower((LSY - LSX)/2);//^^
-				Back_Right.setPower((LSY + LSX)/2);//^^
-
-				//Rotational Movement
-				if ((RSX > 0.1) || (RSX < -0.1)) {//deadzone on the RSX so it doesnt override the LS movement
-					Front_Left.setPower(-RSX);
-					Front_Right.setPower(RSX);
-					Back_Left.setPower(-RSX);
-					Back_Right.setPower(RSX);
-				}
-
-				telemetry.addData("RSX", RSX);
-				telemetry.addData("LSY", LSY);
-				telemetry.addData("LSX", LSX);
-				telemetry.update();
 
 
 
@@ -104,14 +87,23 @@ import java.lang.Math;
             }
         }
     
+	private void MoveToPosistion(double X, double Y) {
+		//take where we currently are, where we want to be, and find the path towards it without hitting something(Probably OpenCV for robots, and  just writing out the known location of flowers & Hive with buffer)
+		//probably just gonna do A* alg because it works lmao.
+		
+	
+	
+	}
+
     private void findHives(Team) { //Find our team Hive Cells to aim at. If we cant find our hive then find the enemy hive to know where ours is(and where we are) in reference
         telemetry.addData("Finding Hive For Team", Team);
         telemetry.update();
-        //detect that we have a "null" Team(first runt through), so we should search for a team
+        //detect that we have a "null" Team(first run through), so we should search for a team
         if (Team == "Null") {
             //magical search for cell cluster
-            //find that we can see 34,35,36,37 cluster on red team, or 42,43,44,45 on blue
-            //set team to that
+            //find that we can see Tags 34,35,36,37 cluster on red team, or 42,43,44,45 on blue
+			//if we cant find either of these, we throw up a big sad face and move towards parking while attempting to find it again
+            //set team to the found if so
 
             telemetry.addData("Team Change", Team);
             telemetry.update();
@@ -126,6 +118,11 @@ import java.lang.Math;
     }
 
     private void LaunchBalls(RoBallsN) {
+        telemetry.addData("Launching", "Posistion Check")
+        telemetry.update();
+		if ("able to shoot" != true) { //check for April Tags being visible in a way that tells us we can shoot at the opening
+			//MoveToLaunch Code
+		}
         telemetry.addData("Launching", RoBallsN);
         telemetry.update();
 
@@ -136,6 +133,16 @@ import java.lang.Math;
 
 
         return(RoBallsN);
+    }
+
+    private void CollectBalls() {
+        //this is the OpenCV garbage I have to write ;-;
+        for (){
+            //OpenCV
+
+            if ((RoBallsW + HiveBalls) >= 1) {LaunchBalls(RoBallsN)} //if we have enough weight to launch, launch
+        }
+        return(RoBallsN, RoBallsW)
     }
 
 	/**
